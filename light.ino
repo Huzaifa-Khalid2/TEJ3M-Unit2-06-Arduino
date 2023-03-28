@@ -1,17 +1,29 @@
-// C++ code
-//
+/*
+  Created by: Huzaifa Khalid
+  Created on: March 2023
+  This program uses a distance sensor
+*/
+const int TRIG_PIN = 9;
+const int ECHO_PIN = 10;
 
-int pin5 = 5;
+float duration, distance;
 
-void setup()
-{
-  pinMode(pin5, OUTPUT);
+void setup() {
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  Serial.begin(9600);
 }
 
-void loop()
-{
-  digitalWrite(pin5, HIGH);
-  delay(1000); // Wait for 1000 millisecond(s)
-  digitalWrite(pin5, LOW);
-  delay(1000); // Wait for 1000 millisecond(s)
+void loop() {
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  duration = pulseIn(ECHO_PIN, HIGH);
+  distance = (duration*.0343)/2;
+  Serial.print("Distance: ");
+  Serial.println(distance);
+  delay(100);
 }
